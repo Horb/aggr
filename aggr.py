@@ -4,6 +4,7 @@ import logging
 import argparse
 import sys
 import csv
+import datetime
 from collections import defaultdict
 from itertools import groupby
 
@@ -14,20 +15,26 @@ parser.add_argument('-i', '--infile')
 parser.add_argument('-o', '--outfile')
 parser.add_argument('-d', '--field-delimiter')
 parser.add_argument('-v', '--verbose', action='store_true')
+parser.add_argument('--datetime-format')
+parser.add_argument('--time-format')
+parser.add_argument('--date-format')
 
-parser.set_defaults(field_delimiter=',')
-parser.set_defaults(verbose=False)
+parser.set_defaults(field_delimiter=',', verbose=False, 
+        datetime_format='%Y-%m-%dT%H:%M:%s.%f%z', date_format='%Y-%m-%d', 
+        time_format='%H:%M:%s')
 
 args = parser.parse_args()
 
-PATTERN_OPTIONS = ('key', 'sum', 'max', 'min', 'len', 'any')
+PATTERN_OPTIONS = ('key', 'sum', 'max', 'min', 'len', 'any', 'first', 'last')
 
 FUNCTION_MAP = {
         'sum' : sum,
         'max' : max,
         'min' : min,
         'len' : len,
-        'any' : any
+        'any' : any,
+        'first' : lambda iter: iter[0],
+        'last' : lambda iter: iter[-1]
         }
 
 
@@ -55,6 +62,11 @@ def infer_type(field):
         return float(field)
     except ValueError as ex:
         pass
+    try:
+        return datetime.datetime.strptime(field, args.datetime_format)
+    except ValueError as ex:
+        pass
+    
     return field
 
 
@@ -72,14 +84,12 @@ def get_records():
 
 def aggregate_group(records):
     records = list(records)
-    logging.debug(records)
     for n, _ in enumerate(records[0]):
         if parse_pattern()[n] == 'key':
             continue
         else:
             func = FUNCTION_MAP[parse_pattern()[n]]
             column = [record[n] for record in records]
-            logging.debug(column)
             yield func(column)
 
 
