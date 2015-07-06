@@ -17,7 +17,7 @@ An aggregation pipe.
 
 ## Usage
 
-Feed your data through a pipe or specify a flag using the `-f` flag. Provide a pattern `-p`. Your pattern must have the same number of fields and delimiter as your data. Possible fields for the pattern are:
+Feed your data through a pipe or specify a file using the `-f` flag. Provide a pattern `-p`. Your pattern must have the same number of fields and delimiter as your data. Possible fields for the pattern are:
 
 * key - the field should form part of your key
 * sum
