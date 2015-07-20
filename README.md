@@ -31,6 +31,7 @@ Feed your data through a pipe or specify a file using the `-i` flag. Provide a p
 * first
 * last
 * any - returns True if any of the fields values are "Truthy", False otherwise.
+* A lambda function that can be passed to `reduce`. See below.
 
 ## Examples
 
