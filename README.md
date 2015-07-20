@@ -57,6 +57,10 @@ Composite keys are supported.
     2015-05-15,Chips,1300
     2015-05-15,Eggs,3900
 
+Custom aggregators are supported. Since lambdas use commas to separate parameters you must switch your delimiter to something other than a comma.
+
+    $ cat data2.txt | sed 's/,/#/g' | aggr -d '#' -p 'key#key#lambda acc,v: int(acc + v / 100)'
+
 ## Install
 
     $ git clone http://github.com/Horb/aggr.git
