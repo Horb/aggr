@@ -59,7 +59,16 @@ Composite keys are supported.
 
 Custom aggregators are supported. Since lambdas use commas to separate parameters you must switch your delimiter to something other than a comma.
 
-    $ cat data2.txt | sed 's/,/#/g' | aggr -d '#' -p 'key#key#lambda acc,v: int(acc + v / 100)'
+    $ cat data2.txt | sed 's/,/#/g' |
+        aggr -d '#' -p 'key#key#lambda acc,v: int(acc + v / 100)' |
+        sed 's/#/,/g'
+
+    2015-05-13,Bean,13
+    2015-05-13,Chips,26
+    2015-05-13,Eggs,12
+    2015-05-15,Beans,13
+    2015-05-15,Chips,13
+    2015-05-15,Eggs,39
 
 ## Install
 
