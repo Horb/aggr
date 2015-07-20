@@ -15,6 +15,10 @@ An aggregation pipe.
     Chips,45
     Eggs,33
 
+## Why?
+
+Answers to "How do I sum like `uniq -c `" weren't satisfactory.
+
 ## Usage
 
 Feed your data through a pipe or specify a file using the `-i` flag. Provide a pattern `-p`. Your pattern must have the same number of fields and delimiter as your data. Possible fields for the pattern are:
